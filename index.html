@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            text-align: center;
+        }
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+        .menu {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .menu h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .total {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .order-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="menu" id="menu">
+        <h2>Our Menu</h2>
+        <div class="menu-item">
+            <span>Grilled Chicken</span>
+            <span>$12.99</span>
+            <input type="checkbox" class="item" value="12.99">
+        </div>
+        <div class="menu-item">
+            <span>Pasta Alfredo</span>
+            <span>$10.99</span>
+            <input type="checkbox" class="item" value="10.99">
+        </div>
+        <div class="menu-item">
+            <span>Caesar Salad</span>
+            <span>$8.99</span>
+            <input type="checkbox" class="item" value="8.99">
+        </div>
+        <div class="menu-item">
+            <span>Chocolate Cake</span>
+            <span>$6.99</span>
+            <input type="checkbox" class="item" value="6.99">
+        </div>
+        <div class="total">Total: $<span id="total">0.00</span></div>
+        <button class="order-btn" onclick="placeOrder()">Place Order</button>
+    </div>
+    
+    <script>
+        const checkboxes = document.querySelectorAll('.item');
+        const totalSpan = document.getElementById('total');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                let total = 0;
+                checkboxes.forEach(item => {
+                    if (item.checked) {
+                        total += parseFloat(item.value);
+                    }
+                });
+                totalSpan.textContent = total.toFixed(2);
+            });
+        });
+
+        function placeOrder() {
+            alert("Your order has been placed! Total: $" + totalSpan.textContent);
+        }
+        
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    let total = 0;
+                    checkboxes.forEach(item => {
+                        if (item.checked) {
+                            total += parseFloat(item.value);
+                        }
+                    });
+                    totalSpan.textContent = total.toFixed(2);
+                });
+            });
+        
+            function placeOrder() {
+                // Collect selected items
+                let orderDetails = "Order Details:\n";
+                checkboxes.forEach(item => {
+                    if (item.checked) {
+                        const itemName = item.previousElementSibling.previousElementSibling.textContent;
+                        const itemPrice = item.value;
+                        orderDetails += `${itemName} - $${itemPrice}\n`;
+                    }
+                });
+        
+                // Add the total
+                orderDetails += `\nTotal: $${totalSpan.textContent}`;
+        
+                // WhatsApp link with the order details
+                const phoneNumber = "7060649243"; // Replace with the owner's WhatsApp phone number
+                const message = encodeURIComponent(orderDetails);
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+        
+                // Open the WhatsApp link
+                window.open(whatsappUrl, "_blank");
+            }
+        
+    </script>
+</body>
+</html>
